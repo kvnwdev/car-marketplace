@@ -1,4 +1,4 @@
-import { CarProps } from "@/types";
+import { FilterProps } from "@/types";
 
 /**
  * calculateCarRent
@@ -22,14 +22,16 @@ export const calculateCarRent = (city_mpg: number, year: number) => {
   return rentalRatePerDay.toFixed(0);
 };
 
-export async function fetchCars() {
+export async function fetchCars(filters: FilterProps) {
   const BASE_ENDPOINT = process.env.APIENDPOINT_CARS;
   const headers: Record<string, string> = {
     "X-RapidAPI-Key": process.env.APIKEY_CARS || "",
     "X-RapidAPI-Host": process.env.APIHOST_CARS || "",
   };
 
-  const REQUEST_URL = `${BASE_ENDPOINT}/cars?model=&make=Porsche&year=2023&fuel_type=&limit=`;
+  const { manufacturer, model, year, fuel, limit } = filters;
+
+  const REQUEST_URL = `${BASE_ENDPOINT}/cars?model=${model}&make=${manufacturer}&year=${year}&fuel_type=${fuel}&limit=${limit}`;
 
   const response = await fetch(REQUEST_URL, { headers: headers });
 
@@ -63,4 +65,14 @@ export const generateCarImageUrl = (angle?: string) => {
   }
 
   return imageUrl;
+};
+
+export const updateSearchParams = (type: string, value: string) => {
+  const searchParams = new URLSearchParams(window.location.search);
+
+  searchParams.set(type, value);
+
+  const newPathname = `${window.location.pathname}?${searchParams.toString()}`;
+
+  return newPathname;
 };
