@@ -28,8 +28,8 @@ function SearchBar() {
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (manufacturer === "" && model === "") {
-      alert("Please enter a manufacturer or model");
+    if (manufacturer.trim() === "" && model.trim() === "") {
+      alert("Please provide some input");
       return;
     }
 

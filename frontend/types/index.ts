@@ -37,6 +37,9 @@ export interface FilterProps {
   fuel: string;
   limit: number;
 }
+export interface HomeProps {
+  searchParams: FilterProps;
+}
 
 export interface OptionProps {
   title: string;
